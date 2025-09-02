@@ -1,227 +1,150 @@
-import React, { useState, useEffect } from "react";
-import { motion } from "framer-motion";
-import { ChevronDown } from "lucide-react";
+import React, { useState } from "react";
 
-export default function VeeraWebsiteV3() {
-  const [page, setPage] = useState("home");
-  const [pollVotes, setPollVotes] = useState(() => {
-    const saved = localStorage.getItem("pollVotes");
-    return saved ? JSON.parse(saved) : {};
-  });
+export default function App() {
+  const [pollResponses, setPollResponses] = useState({});
 
-  const polls = [
-    {
-      id: 1,
-      q: "What makes someone a true ally?",
-      options: [
-        "Listening deeply",
-        "Speaking up against bias",
-        "Sharing responsibilities equally",
-        "Respecting boundaries",
-        "Supporting without judgement",
-        "Other"
-      ]
-    },
-    {
-      id: 2,
-      q: "Which stereotype about men do you wish would change?",
-      options: [
-        "Men shouldn’t cry",
-        "Men must always provide",
-        "Men must be tough and strong",
-        "Men don’t need help",
-        "Men can’t be nurturing",
-        "Other"
-      ]
-    },
-    {
-      id: 3,
-      q: "What motivates you to stand up for others?",
-      options: [
-        "Fairness and justice",
-        "Empathy",
-        "Personal experience",
-        "Community values",
-        "Inspiration from role models",
-        "Other"
-      ]
-    }
-  ];
-
-  const vote = (pollId, option) => {
-    const updated = { ...pollVotes, [pollId]: option };
-    setPollVotes(updated);
-    localStorage.setItem("pollVotes", JSON.stringify(updated));
+  const handlePollChange = (question, value) => {
+    setPollResponses({ ...pollResponses, [question]: value });
   };
 
-  const NavLink = ({ label, id }) => (
-    <button
-      className={`px-4 py-2 ${
-        page === id ? "font-bold border-b-2 border-black" : "text-gray-600"
-      }`}
-      onClick={() => setPage(id)}
-    >
-      {label}
-    </button>
-  );
-
-  const Section = ({ title, children }) => (
-    <motion.section
-      className="p-6 max-w-3xl mx-auto"
-      initial={{ opacity: 0, y: 20 }}
-      animate={{ opacity: 1, y: 0 }}
-    >
-      <h2 className="text-2xl font-semibold mb-4">{title}</h2>
-      {children}
-    </motion.section>
-  );
-
   return (
-    <div className="min-h-screen flex flex-col bg-white">
-      {/* Navbar */}
-      <nav className="flex justify-center space-x-4 py-4 shadow-sm bg-white sticky top-0 z-10">
-        <NavLink label="Home" id="home" />
-        <NavLink label="About" id="about" />
-        <NavLink label="Our DNA" id="dna" />
-        <NavLink label="Contact" id="contact" />
-        <NavLink label="FAQs" id="faqs" />
-      </nav>
+    <div className="font-sans text-neutral-900 bg-white">
+      {/* HEADER */}
+      <header className="border-b sticky top-0 bg-white z-10">
+        <div className="max-w-6xl mx-auto flex justify-between items-center p-4">
+          <h1 className="text-xl font-bold">Veera Foundation</h1>
+          <nav className="space-x-6">
+            <a href="#home" className="hover:text-blue-600">Home</a>
+            <a href="#about" className="hover:text-blue-600">About</a>
+            <a href="#dna" className="hover:text-blue-600">Our DNA</a>
+            <a href="#contact" className="hover:text-blue-600">Contact</a>
+          </nav>
+        </div>
+      </header>
 
-      <main className="flex-1">
-        {page === "home" && (
-          <>
-            <Section title="Who are we?">
-              <p>
-                Veera Foundation is a Mumbai-based non-profit organisation. It aims to perpetuate
-                healthier masculinity for men and allow them to build allyship towards a more equal
-                society. We believe men can nurture meaningful relationships, challenge limiting norms,
-                and walk alongside women and other marginalized communities for a just world. Our work
-                unlocks this potential, making men active partners in building safer, compassionate
-                spaces for all.
-              </p>
-            </Section>
+      <main>
+        {/* HOME */}
+        <section id="home" className="max-w-6xl mx-auto p-6">
+          <h2 className="text-3xl font-bold mb-4">Who Are We?</h2>
+          <p className="mb-4">
+            Veera Foundation is a Mumbai-based non-profit organisation. It aims to perpetuate healthier masculinity for men and allow them to build allyship towards a more equal society. We believe men can nurture meaningful relationships, challenge limiting norms, and walk alongside women and other marginalized communities for a just world. Our work unlocks this potential, making men active partners in building safer, and compassionate spaces for all.
+          </p>
 
-            <Section title="Our Idea">
-              <p>
-                At Veera Foundation, we believe masculinity is not to be defended or feared, but to be
-                reimagined. Our work rests on four interconnected ideas:
-              </p>
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mt-4">
-                {["Positive Masculinity", "Allyship", "Shared Responsibility", "Community"].map(
-                  (idea) => (
-                    <div key={idea} className="border rounded-xl p-4 shadow-sm bg-gray-50">
-                      {idea}
-                    </div>
-                  )
-                )}
-              </div>
-            </Section>
+          <h3 className="text-2xl font-semibold mt-6 mb-2">Our Idea</h3>
+          <p className="mb-4">At Veera Foundation, we believe masculinity is not to be defended or feared, but to be reimagined. Our work rests on four interconnected ideas:</p>
+          <ul className="grid md:grid-cols-2 gap-4">
+            <li className="p-4 bg-gray-50 rounded-lg shadow">Positive Masculinity – Strength with empathy. Courage with care.</li>
+            <li className="p-4 bg-gray-50 rounded-lg shadow">Allyship – Standing with the marginalized, not above them.</li>
+            <li className="p-4 bg-gray-50 rounded-lg shadow">Shared Responsibility – Gender equality is in everyone's interest.</li>
+            <li className="p-4 bg-gray-50 rounded-lg shadow">Community – Connection and support help men and society thrive.</li>
+          </ul>
 
-            <Section title="Why Masculinity? Why Now?">
-              <p className="mb-2">
-                <strong>Why Masculinity:</strong> Masculinity shapes societies. When men adhere to
-                rigidity, it weighs on them and their relationships. But when men are given room to
-                grow with empathy and self-awareness, they unlock their true potential: to nurture,
-                connect, and inspire.
-              </p>
-              <p>
-                <strong>Why Now:</strong> Because the moment is ripe for change. Gender conversations
-                are more vibrant than ever. But many men find themselves uncertain, unheard, or
-                disconnected. Now is the time to welcome them into spaces where they listen, learn,
-                and grow — together.
-              </p>
-            </Section>
+          <h3 className="text-2xl font-semibold mt-6 mb-2">Why Masculinity? Why Now?</h3>
+          <p className="mb-2">Masculinity shapes societies. When men adhere to rigidity, it weighs on them and their relationships. But when men are given room to grow with empathy and self-awareness, they unlock their true potential: to nurture, connect, and inspire.</p>
+          <p>Because the moment is ripe for change. Gender conversations are more vibrant than ever. But many men find themselves uncertain, unheard, or disconnected. Now is the time to welcome them.</p>
+        </section>
 
-            <Section title="Polls">
-              {polls.map((poll) => (
-                <div key={poll.id} className="mb-6">
-                  <p className="font-medium mb-2">{poll.q}</p>
-                  {poll.options.map((o) => (
-                    <button
-                      key={o}
-                      className={`px-3 py-1 rounded border mr-2 mb-2 ${
-                        pollVotes[poll.id] === o ? "bg-black text-white" : "bg-white"
-                      }`}
-                      onClick={() => vote(poll.id, o)}
-                    >
-                      {o}
-                    </button>
-                  ))}
-                </div>
+        {/* POLLS */}
+        <section className="max-w-6xl mx-auto p-6 bg-gray-50 rounded-lg mt-8">
+          <h3 className="text-2xl font-semibold mb-4">Quick Poll</h3>
+          {[
+            {
+              q: "What makes someone a true ally?",
+              name: "ally",
+              options: ["Listening deeply","Speaking up against bias","Sharing responsibilities equally","Respecting boundaries","Supporting without judgement","Other"]
+            },
+            {
+              q: "Which stereotype about men do you wish would change?",
+              name: "stereotype",
+              options: ["Men shouldn’t cry","Men must always provide","Men must be tough and strong","Men don’t need help","Men can’t be nurturing","Other"]
+            },
+            {
+              q: "What motivates you to stand up for others?",
+              name: "motivation",
+              options: ["Fairness and justice","Empathy","Personal experience","Community values","Inspiration from role models","Other"]
+            }
+          ].map(({ q, name, options }) => (
+            <div key={name} className="mb-6">
+              <p className="font-medium mb-2">{q}</p>
+              {options.map((opt) => (
+                <label key={opt} className="block">
+                  <input
+                    type="radio"
+                    name={name}
+                    value={opt}
+                    checked={pollResponses[name] === opt}
+                    onChange={(e) => handlePollChange(name, e.target.value)}
+                  /> {opt}
+                </label>
               ))}
-            </Section>
-          </>
-        )}
+            </div>
+          ))}
+        </section>
 
-        {page === "about" && (
-          <Section title="About Us">
-            <p className="mb-4">
-              Veera’s journey began with a quiet but powerful insight: the story of gender change has
-              often left men waiting in the wings. While women and marginalized groups carried the
-              weight of transformation, men were boxed into roles they didn’t choose. Veera was born
-              to rewrite this story, placing men at the center as builders of a more equal world.
-            </p>
-            <p className="mb-4">
-              The blueprint of masculinity handed down to many men is rigid and heavy: it says real
-              men must hide their feelings, bear burdens alone, and lead by control. This blueprint
-              leaves men cut off from themselves and from others, unsure how to step into the
-              movement for equality.
-            </p>
-            <p>
-              At Veera, we see men as part of the solution. We create spaces and tools that invite men
-              to grow beyond stereotypes — toward ways of being grounded in presence, not perfection.
-            </p>
-          </Section>
-        )}
+        {/* ABOUT US */}
+        <section id="about" className="max-w-6xl mx-auto p-6">
+          <h2 className="text-3xl font-bold mb-4">About Us</h2>
+          <h3 className="text-2xl font-semibold mb-2">Our Story</h3>
+          <h4 className="font-bold mt-4">Origin</h4>
+          <p>Veera’s journey began with a quiet but powerful insight: the story of gender change has often left men waiting in the wings...</p>
 
-        {page === "dna" && (
-          <Section title="Our DNA">
-            <p className="mb-4">
-              Positive masculinity means men knowing themselves better, caring for their own
-              well-being, and bringing empathy and courage into their relationships.
-            </p>
-            <ul className="list-disc pl-6 space-y-2">
-              <li><strong>Courage:</strong> Choosing to be vulnerable and speak for equity.</li>
-              <li><strong>Care:</strong> Listening deeply, practicing empathy, and building trust.</li>
-              <li><strong>Community:</strong> Finding connection and shared purpose.</li>
-              <li><strong>Curiosity:</strong> Staying open to learning and unlearning.</li>
-            </ul>
-          </Section>
-        )}
+          <h4 className="font-bold mt-4">Problem</h4>
+          <p>The blueprint of masculinity handed down to many men is rigid and heavy...</p>
 
-        {page === "contact" && (
-          <Section title="Contact Us">
-            <form className="space-y-4 max-w-md mx-auto">
-              <input type="text" placeholder="Full Name" className="w-full border p-2 rounded" required />
-              <input type="email" placeholder="Email Address" className="w-full border p-2 rounded" required />
-              <textarea placeholder="Your Message" className="w-full border p-2 rounded" rows={4}></textarea>
-              <button type="submit" className="bg-black text-white px-4 py-2 rounded w-full">
-                Send
-              </button>
-            </form>
-          </Section>
-        )}
+          <h4 className="font-bold mt-4">Solution</h4>
+          <p>At Veera, we see men as part of the solution. We light a path forward...</p>
 
-        {page === "faqs" && (
-          <Section title="FAQs">
-            {["What does Veera Foundation do?", "Why focus on men?", "How can I partner with Veera?"].map(
-              (q) => (
-                <details key={q} className="mb-4 border rounded p-2">
-                  <summary className="cursor-pointer flex justify-between items-center">
-                    {q}
-                    <ChevronDown size={16} />
-                  </summary>
-                  <p className="mt-2 text-gray-700">Answer coming soon.</p>
-                </details>
-              )
-            )}
-          </Section>
-        )}
+          <h4 className="font-bold mt-4">Why It Matters</h4>
+          <p>Men are more than half of India’s population, yet only 0.3% of gender equality efforts engage them meaningfully...</p>
+
+          <h4 className="font-bold mt-4">Vision</h4>
+          <p>We envision a generation of men redefining masculinity through empathy and allyship...</p>
+
+          <h4 className="font-bold mt-4">Mission</h4>
+          <p>Veera Foundation places men at the heart of change. We create spaces, tools and experiences that spark curiosity...</p>
+
+          <h4 className="font-bold mt-4">The Veera Approach</h4>
+          <ul className="list-disc ml-6">
+            <li><strong>Human-centred:</strong> We begin with men’s real lives, experiences, and emotions...</li>
+            <li><strong>Behaviour-based:</strong> Lasting change comes from practice, not just intention...</li>
+            <li><strong>Community-driven:</strong> No one changes alone...</li>
+          </ul>
+        </section>
+
+        {/* DNA */}
+        <section id="dna" className="max-w-6xl mx-auto p-6">
+          <h2 className="text-3xl font-bold mb-4">Our DNA</h2>
+          <h3 className="text-2xl font-semibold mb-4">Positive Masculinity</h3>
+          <p>At Veera, we see masculinity as something alive: a way of being that can grow...</p>
+
+          <h3 className="text-2xl font-semibold mt-4">Allyship</h3>
+          <p>Allyship is about showing up where it matters...</p>
+
+          <h3 className="text-2xl font-semibold mt-6 mb-2">Our Four Pillars</h3>
+          <ul className="grid md:grid-cols-2 gap-4">
+            <li className="p-4 bg-gray-50 rounded-lg shadow">Courage – The choice to be vulnerable...</li>
+            <li className="p-4 bg-gray-50 rounded-lg shadow">Care – Care is strength. It shows up in listening deeply...</li>
+            <li className="p-4 bg-gray-50 rounded-lg shadow">Community – We grow stronger together, not alone...</li>
+            <li className="p-4 bg-gray-50 rounded-lg shadow">Curiosity – The willingness to learn, unlearn, explore...</li>
+          </ul>
+        </section>
+
+        {/* CONTACT */}
+        <section id="contact" className="max-w-6xl mx-auto p-6">
+          <h2 className="text-3xl font-bold mb-4">Contact Us</h2>
+          <form className="space-y-4">
+            <input className="border p-2 w-full" placeholder="Full Name" required />
+            <input className="border p-2 w-full" placeholder="Email Address" required />
+            <input className="border p-2 w-full" placeholder="Phone Number (Optional)" />
+            <textarea className="border p-2 w-full" placeholder="Tell us a little about what you have in mind…"></textarea>
+            <button type="submit" className="bg-blue-600 text-white px-4 py-2 rounded">Submit</button>
+          </form>
+        </section>
       </main>
 
       <footer className="border-t mt-10">
-        <div className="mx-auto max-w-6xl px-4 py-6 flex items-center justify-between text-sm text-neutral-600">
-          <div>Veera Foundation — Reimagining masculinity through empathy and allyship</div>
+        <div className="mx-auto max-w-6xl px-4 py-6 text-center text-sm text-neutral-600">
+          Veera Foundation — Reimagining masculinity through empathy and allyship
         </div>
       </footer>
     </div>
