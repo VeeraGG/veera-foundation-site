@@ -1,152 +1,142 @@
-import React, { useState } from "react";
+      <div className="flex-1">
+        <motion.h1 initial={{y:6,opacity:0}} animate={{y:0,opacity:1}} transition={{delay:0.05}} className="text-4xl md:text-5xl font-bold leading-tight" style={{color:COLORS.black}}>
+          Veera Foundation: Reimagining masculinity together
+        </motion.h1>
+        <motion.p initial={{y:6,opacity:0}} animate={{y:0,opacity:1}} transition={{delay:0.12}} className="mt-4 text-lg text-neutral-700 max-w-2xl">
+          Veera Foundation is a Mumbai-based non-profit organisation. It aims to perpetuate healthier masculinity for men and allow them to build allyship towards a more equal society. Our work unlocks men’s potential to nurture relationships, challenge limiting norms, and walk alongside women and marginalized communities for a just world.
+        </motion.p>
+
+        <motion.div className="mt-6 flex gap-3" initial={{opacity:0}} animate={{opacity:1}} transition={{delay:0.2}}>
+          <button onClick={onCTAClick} className="rounded-full px-5 py-2 font-semibold shadow" style={{background:COLORS.red,color:'#fff'}}>Join our work</button>
+          <button className="rounded-full px-4 py-2 border font-medium" style={{borderColor:COLORS.darkBlue,color:COLORS.darkBlue}}>Learn more</button>
+        </motion.div>
+
+        <div className="mt-6 flex gap-4 items-center">
+          <div className="flex items-center gap-2">
+            <IconSpark color={COLORS.yellow} />
+            <div className="text-sm text-neutral-600">Programs • Research • Community</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+)
+
+const IdeaCard = ({ title, desc, color }) => (
+  <motion.div whileHover={{y:-6,scale:1.02}} className="p-5 rounded-2xl shadow-md cursor-pointer" style={{background:color}}>
+    <div className="font-semibold text-white">{title}</div>
+    <div className="mt-2 text-sm text-white/90">{desc}</div>
+  </motion.div>
+)
+
+const Poll = ({ poll, onVote, selected }) => (
+  <div className="p-4 border rounded-lg">
+    <div className="font-medium mb-3">{poll.q}</div>
+    <div className="grid gap-2">
+      {poll.options.map(o => (
+        <button key={o} onClick={()=>onVote(poll.id,o)} className={`text-sm p-2 rounded ${selected===o? 'bg-black text-white' : 'bg-white border'}`}>{o}</button>
+      ))}
+    </div>
+  </div>
+)
 
 export default function App() {
-  const [pollResponses, setPollResponses] = useState({});
+  const [page, setPage] = useState('home')
+  const [votes, setVotes] = useState({})
 
-  const handlePollChange = (question, value) => {
-    setPollResponses({ ...pollResponses, [question]: value });
-  };
+  const polls = [
+    { id: 1, q: 'What makes someone a true ally?', options: ['Listening deeply','Speaking up against bias','Sharing responsibilities equally','Respecting boundaries','Supporting without judgement','Other'] },
+    { id: 2, q: 'Which stereotype about men do you wish would change?', options: ['Men shouldn’t cry','Men must always provide','Men must be tough and strong','Men don’t need help','Men can’t be nurturing','Other'] },
+    { id: 3, q: 'What motivates you to stand up for others?', options: ['Fairness and justice','Empathy','Personal experience','Community values','Inspiration from role models','Other'] },
+    { id: 4, q: 'What makes it hardest for men to break stereotypes?', options: ['Family expectations','Peer pressure','Cultural norms','Media portrayals','Fear of judgment','Other'] },
+    { id: 5, q: 'What’s the biggest barrier for men in becoming allies?', options: ['Fear of being misunderstood','Lack of awareness','Social conditioning','Pressure to “fit in”','Thinking allyship is “not my role”','Other'] },
+    { id: 6, q: 'Which quality best represents healthy masculinity to you?', options: ['Empathy','Responsibility','Respect for others','Emotional openness','Courage','Other'] },
+    { id: 7, q: 'If masculinity was a movie genre, what would it be?', options: ['Action','Comedy','Drama','Documentary','Sci-Fi'] }
+  ]
+
+  function handleVote(id, opt) {
+    setVotes(prev=>({ ...prev, [id]: opt }))
+  }
 
   return (
-    <div className="font-sans text-neutral-900 bg-white">
-      {/* HEADER */}
-      <header className="border-b sticky top-0 bg-white z-10">
-        <div className="max-w-6xl mx-auto flex justify-between items-center p-4">
-          <h1 className="text-xl font-bold">Veera Foundation</h1>
-          <nav className="space-x-6">
-            <a href="#home" className="hover:text-blue-600">Home</a>
-            <a href="#about" className="hover:text-blue-600">About</a>
-            <a href="#dna" className="hover:text-blue-600">Our DNA</a>
-            <a href="#contact" className="hover:text-blue-600">Contact</a>
-          </nav>
-        </div>
-      </header>
-
+    <div className="min-h-screen bg-white text-black">
+      <Nav setPage={setPage} page={page} />
       <main>
-        {/* HOME */}
-        <section id="home" className="max-w-6xl mx-auto p-6">
-          <h2 className="text-3xl font-bold mb-4">Who Are We?</h2>
-          <p className="mb-4">
-            Veera Foundation is a Mumbai-based non-profit organisation. It aims to perpetuate healthier masculinity for men and allow them to build allyship towards a more equal society. We believe men can nurture meaningful relationships, challenge limiting norms, and walk alongside women and other marginalized communities for a just world. Our work unlocks this potential, making men active partners in building safer, and compassionate spaces for all.
-          </p>
+        {page === 'home' && (
+          <>
+            <Banner onCTAClick={()=>setPage('about')} />
 
-          <h3 className="text-2xl font-semibold mt-6 mb-2">Our Idea</h3>
-          <p className="mb-4">At Veera Foundation, we believe masculinity is not to be defended or feared, but to be reimagined. Our work rests on four interconnected ideas:</p>
-          <ul className="grid md:grid-cols-2 gap-4">
-            <li className="p-4 bg-gray-50 rounded-lg shadow">Positive Masculinity – Strength with empathy. Courage with care.</li>
-            <li className="p-4 bg-gray-50 rounded-lg shadow">Allyship – Standing with the marginalized, not above them.</li>
-            <li className="p-4 bg-gray-50 rounded-lg shadow">Shared Responsibility – Gender equality is in everyone's interest.</li>
-            <li className="p-4 bg-gray-50 rounded-lg shadow">Community – Connection and support help men and society thrive.</li>
-          </ul>
+            <section className="mx-auto max-w-6xl px-4 py-12">
+              <h3 className="text-xl font-semibold mb-4">Our Idea</h3>
+              <p className="text-neutral-700 mb-6">At Veera Foundation, we believe masculinity is not to be defended or feared, but to be reimagined. Our work rests on four interconnected ideas:</p>
 
-          <h3 className="text-2xl font-semibold mt-6 mb-2">Why Masculinity? Why Now?</h3>
-          <p className="mb-2">Masculinity shapes societies. When men adhere to rigidity, it weighs on them and their relationships. But when men are given room to grow with empathy and self-awareness, they unlock their true potential: to nurture, connect, and inspire.</p>
-          <p>Because the moment is ripe for change. Gender conversations are more vibrant than ever. But many men find themselves uncertain, unheard, or disconnected. Now is the time to welcome them.</p>
-        </section>
+              <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
+                <IdeaCard title="Positive Masculinity" desc="Strength with empathy. Courage with care. A way of being that lets men live holistic lives." color={COLORS.red} />
+                <IdeaCard title="Allyship" desc="Standing with the marginalized, not above them. Using privilege to open doors, not block them." color={COLORS.darkGreen} />
+                <IdeaCard title="Shared Responsibility" desc="Gender equality is in everyone's interest. All burdens must be shared." color={COLORS.orange} />
+                <IdeaCard title="Community" desc="Masculinity is not isolation. Connection and support help men and society thrive." color={COLORS.darkBlue} />
+              </div>
+            </section>
 
-        {/* POLLS */}
-        <section className="max-w-6xl mx-auto p-6 bg-gray-50 rounded-lg mt-8">
-          <h3 className="text-2xl font-semibold mb-4">Quick Poll</h3>
-          {[
-            {
-              q: "What makes someone a true ally?",
-              name: "ally",
-              options: ["Listening deeply","Speaking up against bias","Sharing responsibilities equally","Respecting boundaries","Supporting without judgement","Other"]
-            },
-            {
-              q: "Which stereotype about men do you wish would change?",
-              name: "stereotype",
-              options: ["Men shouldn’t cry","Men must always provide","Men must be tough and strong","Men don’t need help","Men can’t be nurturing","Other"]
-            },
-            {
-              q: "What motivates you to stand up for others?",
-              name: "motivation",
-              options: ["Fairness and justice","Empathy","Personal experience","Community values","Inspiration from role models","Other"]
-            }
-          ].map(({ q, name, options }) => (
-            <div key={name} className="mb-6">
-              <p className="font-medium mb-2">{q}</p>
-              {options.map((opt) => (
-                <label key={opt} className="block">
-                  <input
-                    type="radio"
-                    name={name}
-                    value={opt}
-                    checked={pollResponses[name] === opt}
-                    onChange={(e) => handlePollChange(name, e.target.value)}
-                  /> {opt}
-                </label>
-              ))}
+            <section className="mx-auto max-w-6xl px-4 py-8 bg-[linear-gradient(90deg,rgba(247,148,51,0.04),rgba(237,51,43,0.02))] rounded-b-2xl">
+              <div className="grid md:grid-cols-2 gap-6 items-start">
+                <div>
+                  <h4 className="text-lg font-semibold mb-2">Why Masculinity? Why Now?</h4>
+                  <p className="text-neutral-700"><strong>Why Masculinity:</strong> Masculinity shapes societies. When men adhere to rigidity, it weighs on them and their relationships. But when men grow with empathy and self-awareness, they unlock their true potential: to nurture, connect, and inspire.</p>
+                  <p className="mt-3 text-neutral-700"><strong>Why Now:</strong> Because the moment is ripe for change. Gender conversations are more vibrant than ever. Many men find themselves uncertain, unheard, or disconnected. Now is the time to welcome them — to spaces where they listen, learn, and grow in togetherness.</p>
+                </div>
+
+                <div>
+                  <h4 className="text-lg font-semibold mb-2">Tell us what you think</h4>
+                  <div className="grid gap-3">
+                    {polls.map(p => <Poll key={p.id} poll={p} onVote={handleVote} selected={votes[p.id]} />)}
+                    <div className="text-sm text-neutral-500">Your responses are local demo values. For live data, these can be hooked to Google Sheets or Airtable.</div>
+                  </div>
+                </div>
+              </div>
+            </section>
+          </>
+        )}
+
+        {page === 'about' && (
+          <section className="mx-auto max-w-6xl px-4 py-12">
+            <h2 className="text-2xl font-semibold mb-4">About Us</h2>
+            <div className="grid md:grid-cols-2 gap-6">
+              <div>
+                <h3 className="font-semibold">Our Story</h3>
+                <p className="text-neutral-700 mt-2">
+                  Veera’s journey began with a quiet but powerful insight: the story of gender change has often left men waiting in the wings. Veera was born to rewrite this story, placing men at the center as builders of a more equal world.
+                </p>
+
+                <h4 className="mt-4 font-semibold">Problem</h4>
+                <p className="text-neutral-700 mt-2">
+                  The blueprint of masculinity handed down is rigid and heavy: real men must hide feelings, bear burdens alone, and lead by control. Without spaces to reflect and grow, men’s natural capacities for care and partnership remain dormant.
+                </p>
+
+                <h4 className="mt-4 font-semibold">Solution</h4>
+                <p className="text-neutral-700 mt-2">
+                  Veera creates spaces and tools that invite men to journey beyond stereotypes, toward ways of being grounded in presence, not perfection. Here, men grow into open, connected allies.
+                </p>
+              </div>
+
+              <div>
+                <div className="rounded-2xl p-6" style={{background:COLORS.cream}}>
+                  <h4 className="font-semibold">Why It Matters (Statistics)</h4>
+                  <p className="mt-2 text-neutral-700">Men are more than half of India’s population, yet only <strong>0.3%</strong> of gender equality efforts engage them meaningfully (UNESCO, 2022). Many still carry beliefs that hold back equality.</p>
+                  <p className="mt-2 text-neutral-700">Veera exists to ensure men are seen, supported, and invited to change — so that progress benefits everyone.</p>
+                </div>
+
+                <div className="mt-4 grid gap-3">
+                  <div className="p-4 border rounded-lg">Vision: We envision a generation of men redefining masculinity through empathy and allyship, transforming strength into care and care into meaningful change.</div>
+                  <div className="p-4 border rounded-lg">Mission: Veera creates spaces, tools, and experiences that spark curiosity, challenge limiting norms, inspire self-growth, and foster positive masculinity.</div>
+                </div>
+              </div>
             </div>
-          ))}
-        </section>
 
-        {/* ABOUT US */}
-        <section id="about" className="max-w-6xl mx-auto p-6">
-          <h2 className="text-3xl font-bold mb-4">About Us</h2>
-          <h3 className="text-2xl font-semibold mb-2">Our Story</h3>
-          <h4 className="font-bold mt-4">Origin</h4>
-          <p>Veera’s journey began with a quiet but powerful insight: the story of gender change has often left men waiting in the wings...</p>
-
-          <h4 className="font-bold mt-4">Problem</h4>
-          <p>The blueprint of masculinity handed down to many men is rigid and heavy...</p>
-
-          <h4 className="font-bold mt-4">Solution</h4>
-          <p>At Veera, we see men as part of the solution. We light a path forward...</p>
-
-          <h4 className="font-bold mt-4">Why It Matters</h4>
-          <p>Men are more than half of India’s population, yet only 0.3% of gender equality efforts engage them meaningfully...</p>
-
-          <h4 className="font-bold mt-4">Vision</h4>
-          <p>We envision a generation of men redefining masculinity through empathy and allyship...</p>
-
-          <h4 className="font-bold mt-4">Mission</h4>
-          <p>Veera Foundation places men at the heart of change. We create spaces, tools and experiences that spark curiosity...</p>
-
-          <h4 className="font-bold mt-4">The Veera Approach</h4>
-          <ul className="list-disc ml-6">
-            <li><strong>Human-centred:</strong> We begin with men’s real lives, experiences, and emotions...</li>
-            <li><strong>Behaviour-based:</strong> Lasting change comes from practice, not just intention...</li>
-            <li><strong>Community-driven:</strong> No one changes alone...</li>
-          </ul>
-        </section>
-
-        {/* DNA */}
-        <section id="dna" className="max-w-6xl mx-auto p-6">
-          <h2 className="text-3xl font-bold mb-4">Our DNA</h2>
-          <h3 className="text-2xl font-semibold mb-4">Positive Masculinity</h3>
-          <p>At Veera, we see masculinity as something alive: a way of being that can grow...</p>
-
-          <h3 className="text-2xl font-semibold mt-4">Allyship</h3>
-          <p>Allyship is about showing up where it matters...</p>
-
-          <h3 className="text-2xl font-semibold mt-6 mb-2">Our Four Pillars</h3>
-          <ul className="grid md:grid-cols-2 gap-4">
-            <li className="p-4 bg-gray-50 rounded-lg shadow">Courage – The choice to be vulnerable...</li>
-            <li className="p-4 bg-gray-50 rounded-lg shadow">Care – Care is strength. It shows up in listening deeply...</li>
-            <li className="p-4 bg-gray-50 rounded-lg shadow">Community – We grow stronger together, not alone...</li>
-            <li className="p-4 bg-gray-50 rounded-lg shadow">Curiosity – The willingness to learn, unlearn, explore...</li>
-          </ul>
-        </section>
-
-        {/* CONTACT */}
-        <section id="contact" className="max-w-6xl mx-auto p-6">
-          <h2 className="text-3xl font-bold mb-4">Contact Us</h2>
-          <form className="space-y-4">
-            <input className="border p-2 w-full" placeholder="Full Name" required />
-            <input className="border p-2 w-full" placeholder="Email Address" required />
-            <input className="border p-2 w-full" placeholder="Phone Number (Optional)" />
-            <textarea className="border p-2 w-full" placeholder="Tell us a little about what you have in mind…"></textarea>
-            <button type="submit" className="bg-blue-600 text-white px-4 py-2 rounded">Submit</button>
-          </form>
-        </section>
-      </main>
-
-      <footer className="border-t mt-10">
-        <div className="mx-auto max-w-6xl px-4 py-6 text-center text-sm text-neutral-600">
-          Veera Foundation — Reimagining masculinity through empathy and allyship
-        </div>
-      </footer>
-    </div>
-  );
-}
+            <section className="mt-6">
+              <h4 className="font-semibold mb-3">Our Partners</h4>
+              <div className="grid md:grid-cols-2 gap-4">
+                {[
+                  {title:'Research', standup:'Academic institutions, research organizations, think tanks', popup:'Generate evidence-based insights, evaluate impact, and co-create knowledge.'},
+                  {title:'Programs', standup:'NGOs, community groups, youth-led organizations', popup:'Co-design, pilot, and scale transformative programs.'},
+                  {title:'Funding', standup:'Philanthropies, foundations, CSR
