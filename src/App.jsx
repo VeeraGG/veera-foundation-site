@@ -46,25 +46,19 @@ export default function VeeraWebsite() {
       {/* HOME */}
       {page === "home" && (
         <>
-          <Section title="Who are we?">
-            <p>Veera Foundation is a Mumbai-based non-profit organisation. It aims to perpetuate healthier masculinity for men and allow them to build allyship towards a more equal society. We believe men can nurture meaningful relationships, challenge limiting norms, and walk alongside women and other marginalized communities for a just world.</p>
-          </Section>
-
           <Section title="Our Idea">
-            <p>At Veera Foundation, we believe masculinity is not to be defended or feared, but to be reimagined.</p>
+            <p className="mb-4">At Veera Foundation, we believe masculinity is not to be defended or feared, but to be reimagined. Our work rests on four interconnected ideas:</p>
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-6">
+              <div className="p-4 border rounded-xl bg-gray-50"><strong>Positive Masculinity:</strong><br/>Strength with empathy. Courage with care. A way of being that lets men live holistic lives.</div>
+              <div className="p-4 border rounded-xl bg-gray-50"><strong>Allyship:</strong><br/>Standing with the marginalized, not above them. Using privilege to open doors, not block them.</div>
+              <div className="p-4 border rounded-xl bg-gray-50"><strong>Shared Responsibility:</strong><br/>Gender equality is in everyone's interest. All burdens must be shared.</div>
+              <div className="p-4 border rounded-xl bg-gray-50"><strong>Community:</strong><br/>Masculinity is not isolation. Connection and support help men and society thrive.</div>
+            </div>
           </Section>
 
           <Section title="Why Masculinity? Why Now?">
-            <p>Masculinity shapes societies. When men adhere to rigidity, it weighs on them and their relationships. But when men are given room to grow with empathy and self-awareness, they unlock their true potential: to nurture, connect, and inspire. Gender conversations are more vibrant than ever. But many men find themselves uncertain, unheard, or disconnected. Now is the time to welcome them to spaces where they listen, learn, and grow.</p>
-          </Section>
-
-          <Section title="Four Interconnected Ideas">
-            <ul className="list-disc ml-5 space-y-2">
-              <li><strong>Positive Masculinity:</strong> Strength with empathy. Courage with care.</li>
-              <li><strong>Allyship:</strong> Standing with the marginalized, not above them.</li>
-              <li><strong>Shared Responsibility:</strong> Gender equality is in everyone's interest.</li>
-              <li><strong>Community:</strong> Connection and support help men and society thrive.</li>
-            </ul>
+            <p className="mb-2"><strong>Why Masculinity:</strong> Masculinity shapes societies. When men adhere to rigidity, it weighs on them and their relationships. But when men are given room to grow with empathy and self-awareness, they unlock their true potential: to nurture, connect, and inspire.</p>
+            <p><strong>Why Now:</strong> Because the moment is ripe for change. Gender conversations are more vibrant than ever. But many men find themselves uncertain, unheard, or disconnected. Now is the time to welcome them — to spaces where they listen, learn, and grow; in togetherness.</p>
           </Section>
 
           <Section title="Polls">
